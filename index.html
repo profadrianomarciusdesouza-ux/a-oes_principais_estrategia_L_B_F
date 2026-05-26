@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Carteira Barsi — Dividendos</title>
+<title>Carteira Barsi — Dashboard de Dividendos</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
@@ -12,9 +13,11 @@
 
 :root{
   --bg:#0a0e1a;
+  --surface:#111827;
   --card:#1a2235;
   --border:#2a3a55;
   --gold:#d4a843;
+  --gold-light:#f0c96a;
   --green:#22c55e;
   --red:#ef4444;
   --text:#e8eaf0;
@@ -32,23 +35,47 @@ body{
   background:var(--bg);
   color:var(--text);
   font-family:'DM Sans',sans-serif;
-  padding:40px 20px;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 20%, rgba(212,168,67,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 80%, rgba(59,130,246,0.05) 0%, transparent 60%);
+  pointer-events:none;
 }
 
 .wrapper{
-  max-width:1400px;
-  margin:auto;
+  position:relative;
+  z-index:1;
+  max-width:1450px;
+  margin:0 auto;
+  padding:40px 20px 80px;
 }
 
 header{
   text-align:center;
-  margin-bottom:40px;
+  margin-bottom:56px;
+}
+
+.eyebrow{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:16px;
 }
 
 h1{
   font-family:'Playfair Display',serif;
-  font-size:3rem;
-  margin-bottom:10px;
+  font-size:clamp(2rem,5vw,3.8rem);
+  font-weight:900;
+  line-height:1.1;
 }
 
 h1 span{
@@ -56,76 +83,98 @@ h1 span{
 }
 
 .subtitle{
+  margin-top:16px;
   color:var(--muted);
+  font-size:15px;
+  max-width:700px;
+  margin-left:auto;
+  margin-right:auto;
+  line-height:1.7;
 }
 
 .infobar{
   display:flex;
-  gap:12px;
   flex-wrap:wrap;
-  margin:30px 0;
+  justify-content:center;
+  gap:12px;
+  margin-bottom:48px;
 }
 
 .pill{
+  display:flex;
+  align-items:center;
+  gap:8px;
   background:var(--card);
   border:1px solid var(--border);
   border-radius:999px;
-  padding:10px 16px;
+  padding:8px 18px;
   font-size:12px;
+  color:var(--muted);
+  font-family:'DM Mono',monospace;
+}
+
+.dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--green);
 }
 
 .segment{
-  margin-bottom:40px;
+  margin-bottom:42px;
 }
 
 .seg-header{
   display:flex;
   align-items:center;
-  gap:12px;
-  margin-bottom:14px;
+  gap:14px;
+  margin-bottom:16px;
 }
 
 .seg-icon{
   width:40px;
   height:40px;
+  border-radius:12px;
   display:flex;
   align-items:center;
   justify-content:center;
-  border-radius:12px;
-  font-size:20px;
+  font-size:18px;
 }
 
 .seg-title{
+  font-family:'Playfair Display',serif;
   font-size:1.3rem;
-  font-weight:bold;
+  font-weight:700;
 }
 
 .seg-desc{
+  font-size:12px;
   color:var(--muted);
-  font-size:13px;
 }
 
 .table-wrap{
-  overflow:auto;
+  background:var(--card);
   border:1px solid var(--border);
-  border-radius:16px;
+  border-radius:18px;
+  overflow:auto;
 }
 
 table{
   width:100%;
+  min-width:1200px;
   border-collapse:collapse;
-  min-width:1100px;
 }
 
-thead{
-  background:rgba(212,168,67,0.08);
+thead tr{
+  background:rgba(212,168,67,0.06);
 }
 
 th{
-  padding:14px;
+  padding:16px;
   text-align:left;
-  font-size:11px;
-  letter-spacing:1px;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:2px;
   text-transform:uppercase;
   color:var(--gold);
 }
@@ -135,33 +184,41 @@ td:not(:first-child){
   text-align:right;
 }
 
-td{
-  padding:16px 14px;
+tbody tr{
   border-top:1px solid rgba(42,58,85,0.5);
+  transition:background .2s;
 }
 
 tbody tr:hover{
-  background:rgba(59,130,246,0.05);
+  background:rgba(59,130,246,0.04);
 }
 
-.ticker{
+td{
+  padding:16px;
+  font-size:14px;
+}
+
+.ticker-badge{
   display:inline-block;
   background:rgba(212,168,67,0.12);
-  border:1px solid rgba(212,168,67,0.3);
+  border:1px solid rgba(212,168,67,0.25);
+  color:var(--gold-light);
+  font-family:'DM Mono',monospace;
+  font-size:13px;
   padding:4px 10px;
   border-radius:6px;
-  color:var(--gold);
-  font-family:'DM Mono',monospace;
 }
 
-.company{
-  font-size:12px;
+.company-name{
   color:var(--muted);
+  font-size:12px;
   margin-top:4px;
 }
 
 .price{
   font-family:'DM Mono',monospace;
+  font-size:15px;
+  font-weight:500;
 }
 
 .pos{
@@ -172,9 +229,24 @@ tbody tr:hover{
   color:var(--red);
 }
 
+.metric{
+  font-family:'DM Mono',monospace;
+  font-size:13px;
+}
+
 .loading{
   color:var(--muted);
   font-size:12px;
+}
+
+.footer{
+  margin-top:60px;
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.8;
+  border-top:1px solid var(--border);
+  padding-top:32px;
 }
 
 a{
@@ -182,14 +254,21 @@ a{
   text-decoration:none;
 }
 
-.footer{
-  margin-top:50px;
-  padding-top:30px;
-  border-top:1px solid var(--border);
-  text-align:center;
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.7;
+@media(max-width:768px){
+
+  table{
+    min-width:1100px;
+  }
+
+  th,td{
+    padding:12px;
+    font-size:12px;
+  }
+
+  h1{
+    font-size:2rem;
+  }
+
 }
 
 </style>
@@ -200,27 +279,45 @@ a{
 <div class="wrapper">
 
 <header>
-  <h1>Carteira <span>Barsi</span></h1>
 
-  <p class="subtitle">
-    Dashboard automático de dividendos e ações da B3
-  </p>
+<p class="eyebrow">
+📈 Estratégia de Dividendos
+</p>
+
+<h1>
+Carteira <span>Barsi</span>
+</h1>
+
+<p class="subtitle">
+Dashboard automático inspirado na estratégia de dividendos de longo prazo de Luiz Barsi Filho.
+Cotações atualizadas automaticamente, dividend yield, dividendos anuais e histórico.
+</p>
+
 </header>
 
 <div class="infobar">
-  <div class="pill">📈 Atualização automática</div>
-  <div class="pill">⏱ Atualiza a cada 60 segundos</div>
-  <div class="pill">
-    Última atualização:
-    <span id="last-update">--</span>
-  </div>
+
+<div class="pill">
+<span class="dot"></span>
+Cotações automáticas
 </div>
 
-<div id="segments"></div>
+<div class="pill">
+⏱ Atualização a cada 60 segundos
+</div>
+
+<div class="pill">
+Última atualização:
+<span id="last-update">--</span>
+</div>
+
+</div>
+
+<div id="segments-container"></div>
 
 <div class="footer">
-  ⚠️ Conteúdo apenas educacional.<br>
-  Dados via Yahoo Finance.
+⚠️ Aviso educacional: este painel é apenas para fins informativos e didáticos.<br>
+Os dados podem possuir atraso de mercado.
 </div>
 
 </div>
@@ -232,8 +329,8 @@ const SEGMENTS = [
 {
   icon:'🏦',
   color:'#3b82f6',
-  title:'Bancos',
-  desc:'Instituições financeiras',
+  title:'Setor Bancário',
+  desc:'Bancos sólidos com histórico consistente de dividendos',
   ativos:[
     { ticker:'BBAS3', name:'Banco do Brasil' },
     { ticker:'ITUB4', name:'Itaú Unibanco' }
@@ -241,10 +338,21 @@ const SEGMENTS = [
 },
 
 {
+  icon:'🛡️',
+  color:'#8b5cf6',
+  title:'Seguros & Previdência',
+  desc:'Empresas com geração previsível de caixa',
+  ativos:[
+    { ticker:'BBSE3', name:'BB Seguridade' },
+    { ticker:'PSSA3', name:'Porto Seguro' }
+  ]
+},
+
+{
   icon:'⚡',
   color:'#f59e0b',
-  title:'Energia',
-  desc:'Energia elétrica',
+  title:'Energia Elétrica',
+  desc:'Transmissoras e geradoras com dividendos elevados',
   ativos:[
     { ticker:'TAEE11', name:'Taesa' },
     { ticker:'EGIE3', name:'Engie Brasil' }
@@ -255,10 +363,21 @@ const SEGMENTS = [
   icon:'💧',
   color:'#06b6d4',
   title:'Saneamento',
-  desc:'Empresas de saneamento',
+  desc:'Empresas de serviços essenciais',
   ativos:[
     { ticker:'SAPR11', name:'Sanepar' },
     { ticker:'CSMG3', name:'Copasa' }
+  ]
+},
+
+{
+  icon:'📡',
+  color:'#22c55e',
+  title:'Telecomunicações',
+  desc:'Empresas com geração estável de caixa',
+  ativos:[
+    { ticker:'VIVT3', name:'Telefônica Brasil' },
+    { ticker:'TIMS3', name:'TIM Brasil' }
   ]
 }
 
@@ -268,14 +387,14 @@ function yahooTicker(t){
   return t + '.SA';
 }
 
-function historyUrl(t){
-  return `https://finance.yahoo.com/quote/${yahooTicker(t)}`;
+function historyUrl(ticker){
+  return `https://finance.yahoo.com/quote/${yahooTicker(ticker)}`;
 }
 
-function build(){
+function buildStructure(){
 
   const container =
-    document.getElementById('segments');
+    document.getElementById('segments-container');
 
   SEGMENTS.forEach((seg,si)=>{
 
@@ -284,12 +403,12 @@ function build(){
 
     div.className='segment';
 
-    div.innerHTML=`
+    div.innerHTML = `
 
       <div class="seg-header">
 
         <div class="seg-icon"
-             style="background:${seg.color}22;border:1px solid ${seg.color}55">
+             style="background:${seg.color}22;border:1px solid ${seg.color}44">
           ${seg.icon}
         </div>
 
@@ -305,48 +424,69 @@ function build(){
       <table>
 
       <thead>
+
       <tr>
+
         <th>Ativo</th>
         <th>Cotação</th>
-        <th>Var%</th>
-        <th>Média 52s</th>
-        <th>DY</th>
+        <th>Var. Dia</th>
+        <th>Média 50d</th>
+        <th>Dividend Yield</th>
         <th>Div. Anual</th>
         <th>Histórico</th>
+
       </tr>
+
       </thead>
 
       <tbody>
 
       ${seg.ativos.map((a,ai)=>`
 
-        <tr>
+      <tr>
 
         <td>
-          <div class="ticker">${a.ticker}</div>
-          <div class="company">${a.name}</div>
+
+          <span class="ticker-badge">
+            ${a.ticker}
+          </span>
+
+          <div class="company-name">
+            ${a.name}
+          </div>
+
         </td>
 
         <td id="price-${si}-${ai}">
-          <span class="loading">carregando...</span>
+          <span class="loading">
+            carregando...
+          </span>
         </td>
 
-        <td id="change-${si}-${ai}">--</td>
+        <td id="change-${si}-${ai}">
+          --
+        </td>
 
-        <td id="avg-${si}-${ai}">--</td>
+        <td id="avg-${si}-${ai}" class="metric">
+          --
+        </td>
 
-        <td id="dy-${si}-${ai}">--</td>
+        <td id="dy-${si}-${ai}" class="metric">
+          --
+        </td>
 
-        <td id="div-${si}-${ai}">--</td>
+        <td id="div-${si}-${ai}" class="metric">
+          --
+        </td>
 
         <td>
           <a href="${historyUrl(a.ticker)}"
              target="_blank">
-             Ver ↗
+             Ver gráfico ↗
           </a>
         </td>
 
-        </tr>
+      </tr>
 
       `).join('')}
 
@@ -366,52 +506,81 @@ function build(){
 
 async function fetchQuote(ticker){
 
-  const url =
-    `https://query1.finance.yahoo.com/v10/finance/quoteSummary/${yahooTicker(ticker)}?modules=price,summaryDetail`;
+  const yt =
+    yahooTicker(ticker);
 
-  const response =
-    await fetch(url);
+  // ===== COTAÇÃO =====
 
-  if(!response.ok){
-    throw new Error('Erro HTTP');
+  const chartUrl =
+    `https://query1.finance.yahoo.com/v8/finance/chart/${yt}?interval=1d&range=1mo`;
+
+  const chartRes =
+    await fetch(chartUrl);
+
+  if(!chartRes.ok){
+    throw new Error('Erro na cotação');
   }
 
-  const data =
-    await response.json();
+  const chartData =
+    await chartRes.json();
 
-  const result =
-    data.quoteSummary.result[0];
-
-  const priceData =
-    result.price;
-
-  const summary =
-    result.summaryDetail;
+  const meta =
+    chartData.chart.result[0].meta;
 
   const price =
-    priceData.regularMarketPrice.raw;
+    meta.regularMarketPrice ||
+    meta.previousClose ||
+    0;
 
   const prev =
-    priceData.regularMarketPreviousClose.raw;
+    meta.chartPreviousClose ||
+    meta.previousClose ||
+    price;
 
   const change =
     ((price-prev)/prev)*100;
 
-  return {
+  // ===== DIVIDENDOS =====
 
+  let avg50 = 0;
+  let dy = 0;
+  let annualDiv = 0;
+
+  try{
+
+    const detailUrl =
+      `https://query1.finance.yahoo.com/v10/finance/quoteSummary/${yt}?modules=summaryDetail`;
+
+    const detailRes =
+      await fetch(detailUrl);
+
+    const detailData =
+      await detailRes.json();
+
+    const summary =
+      detailData.quoteSummary.result[0].summaryDetail;
+
+    avg50 =
+      summary.fiftyDayAverage?.raw || 0;
+
+    dy =
+      (summary.dividendYield?.raw || 0) * 100;
+
+    annualDiv =
+      summary.trailingAnnualDividendRate?.raw || 0;
+
+  }catch(e){
+
+    console.log('Dividendos indisponíveis');
+
+  }
+
+  return{
     price,
-
     change,
-
-    avg52:
-      summary.fiftyTwoWeekAverage?.raw || 0,
-
-    dy:
-      (summary.dividendYield?.raw || 0)*100,
-
-    annualDiv:
-      summary.trailingAnnualDividendRate?.raw || 0
-
+    avg50,
+    dy,
+    annualDiv
   };
 
 }
@@ -445,38 +614,46 @@ async function updateAll(){
           const divEl =
             document.getElementById(`div-${si}-${ai}`);
 
-          priceEl.innerHTML =
-            `<span class="price">
+          priceEl.innerHTML = `
+            <span class="price">
               R$ ${q.price.toFixed(2).replace('.',',')}
-            </span>`;
+            </span>
+          `;
 
           changeEl.textContent =
-            q.change.toFixed(2)+'%';
+            `${q.change >= 0 ? '+' : ''}${q.change.toFixed(2)}%`;
 
           changeEl.className =
             q.change >= 0 ? 'pos' : 'neg';
 
           avgEl.textContent =
-            'R$ '+
-            q.avg52.toFixed(2).replace('.',',');
+            'R$ ' + q.avg50.toFixed(2).replace('.',',');
 
           dyEl.textContent =
-            q.dy.toFixed(2)+'%';
+            q.dy.toFixed(2) + '%';
 
           divEl.textContent =
-            'R$ '+
-            q.annualDiv.toFixed(2).replace('.',',');
+            'R$ ' + q.annualDiv.toFixed(2).replace('.',',');
 
         })
 
-        .catch(()=>{
+        .catch(err=>{
 
-          document.getElementById(`price-${si}-${ai}`)
-            .innerHTML =
-              `<a href="${historyUrl(a.ticker)}"
-                  target="_blank">
-                  Yahoo ↗
-               </a>`;
+          console.error(err);
+
+          const priceEl =
+            document.getElementById(`price-${si}-${ai}`);
+
+          if(priceEl){
+
+            priceEl.innerHTML = `
+              <a href="${historyUrl(a.ticker)}"
+                 target="_blank">
+                 Yahoo ↗
+              </a>
+            `;
+
+          }
 
         })
 
@@ -494,7 +671,7 @@ async function updateAll(){
 
 }
 
-build();
+buildStructure();
 
 updateAll();
 
